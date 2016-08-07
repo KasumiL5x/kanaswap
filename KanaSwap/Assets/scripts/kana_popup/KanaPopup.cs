@@ -62,6 +62,11 @@ public class KanaPopup : MonoBehaviour {
 			case KanaType.TSU: { animation.configure("hiragana", "tsu"); break; }
 			case KanaType.TE: { animation.configure("hiragana", "te"); break; }
 			case KanaType.TO: { animation.configure("hiragana", "to"); break; }
+			case KanaType.NA: { animation.configure("hiragana", "na"); break; }
+			case KanaType.NI: { animation.configure("hiragana", "ni"); break; }
+			case KanaType.NU: { animation.configure("hiragana", "nu"); break; }
+			case KanaType.NE: { animation.configure("hiragana", "ne"); break; }
+			case KanaType.NO: { animation.configure("hiragana", "no"); break; }
 
 			default: {
 				Debug.Log("WARNING: Unhandled KanaType in KanaPopup::setKanaType (" + KanaTypeTo.romaji(type) + ").");

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class BezierSpline : MonoBehaviour {
+public class BezierGenerator : MonoBehaviour {
 	public static void getCurveControlPoints( List<Vector2> knots, ref List<Vector2> outFirstCPs, ref List<Vector2> outSecondCPs ) {
 		if( null == knots ) {
 			throw new ArgumentNullException("knots");

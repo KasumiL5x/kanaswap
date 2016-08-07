@@ -86,22 +86,6 @@ public class Bezier {
 		float y = -3.0f * p0.y * nt * nt  +  3.0f * p1.y * (1.0f - 4.0f * t + 3.0f * t * t)  +  3.0f * p2.y * (2.0f * t - 3.0f * t * t)  +  3.0f * p3.y * t * t;
 		float z = -3.0f * p0.z * nt * nt  +  3.0f * p1.z * (1.0f - 4.0f * t + 3.0f * t * t)  +  3.0f * p2.z * (2.0f * t - 3.0f * t * t)  +  3.0f * p3.z * t * t;
 		return new Vector3(x, y, z);
-
-
-	// float a = 1-t;
-	// float b = a*6*t;
-	// a = a*a*3;
-	// float c = t*t*3;
-
-	// return     - a * p0  // derivative formula from GetBezierPoint formula
-	//         + a * p1
-	//         - b * p1
-	//         - c * p2
-	//         + b * p2
-	//         + c * p3;
-
-		// float invT = 1.0f - t;
-		// return (2.0f*invT * (p1-p0) + t*t*(p2-p1));
 	}
 
 	Vector3 calculateBezierPoint( float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3 ) {

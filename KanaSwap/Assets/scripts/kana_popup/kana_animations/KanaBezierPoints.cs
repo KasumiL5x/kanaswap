@@ -25,7 +25,7 @@ public class KanaBezierPoints : MonoBehaviour {
 		// goes through all of the points directly
 		List<Vector2> firstCPs = new List<Vector2>();
 		List<Vector2> secondCPs = new List<Vector2>();
-		BezierSpline.getCurveControlPoints(originalPoints, ref firstCPs, ref secondCPs);
+		BezierGenerator.getCurveControlPoints(originalPoints, ref firstCPs, ref secondCPs);
 
 		// create all of the final points for the bezier curve
 		finalPoints_ = new List<Vector3>();

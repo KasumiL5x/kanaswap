@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class BezierPointTangent {
@@ -78,6 +79,34 @@ public class Bezier {
 		}
 
 		return points;
+	}
+
+	public float length( int steps=10 ) {
+		if( steps <= 0 ) {
+			throw new ArgumentException ("Steps must be positive and nonzero.", "steps");
+		}
+
+		float totalLength = 0.0f;
+		Vector3 lastPoint = Vector3.zero;
+
+		for( int currCurve = 0; currCurve < curveCount_; ++currCurve ) {
+			for( int currStep = 0; currStep <= steps; ++currStep ) {
+				int index = currCurve * 3;
+				var p0 = controlPoints_[index+0];
+				var p1 = controlPoints_[index+1];
+				var p2 = controlPoints_[index+2];
+				var p3 = controlPoints_[index+3];
+
+				float t = (0 == currStep) ? 0.0f : (float)currStep / (float)steps;
+				var point = calculateBezierPoint(t, p0, p1, p2, p3);
+				if( currStep > 0 ) {
+					totalLength += Vector3.Distance (point, lastPoint);
+				}
+				lastPoint = point;
+			}
+		}
+
+		return totalLength;
 	}
 
 	Vector3 calculateBezierTangent( float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3 ) {

@@ -10,7 +10,7 @@ public class KanaBezierPoints : MonoBehaviour {
 		BezierCurve = new Bezier();
 	}
 
-	void Start() {
+	void Awake() {
 		processPoints();
 	}
 

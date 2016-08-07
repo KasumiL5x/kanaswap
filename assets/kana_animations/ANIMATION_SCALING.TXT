@@ -1,0 +1,2 @@
+210px = 30 frames
+1 frame = 7px

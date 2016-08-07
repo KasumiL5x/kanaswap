@@ -1,0 +1,119 @@
+﻿using UnityEngine;
+using System.Collections.Generic;
+
+public class BezierPointTangent {
+	public Vector3 point;
+	public Vector3 tangent;
+
+	public BezierPointTangent( Vector3 p, Vector3 t ) {
+		point = p;
+		tangent = t;
+	}
+}
+
+public class Bezier {
+	List<Vector3> controlPoints_;
+	int curveCount_ = 0;
+
+
+	public void setControlPoints( List<Vector3> points ) {
+		controlPoints_ = points;
+		curveCount_ = controlPoints_.Count / 3;
+	}
+
+	public List<BezierPointTangent> samplePoints( int samplesPerSegment ) {
+		List<BezierPointTangent> points = new List<BezierPointTangent>();
+
+		for( int currCurve = 0; currCurve < curveCount_; ++currCurve ) {
+			for( int currSeg = 0; currSeg <= samplesPerSegment; ++currSeg ) {
+				float t = (0==currSeg) ? 0.0f : (float)currSeg / (float)samplesPerSegment;
+
+				int index = currCurve * 3;
+				var p0 = controlPoints_[index+0];
+				var p1 = controlPoints_[index+1];
+				var p2 = controlPoints_[index+2];
+				var p3 = controlPoints_[index+3];
+
+				var point = calculateBezierPoint(t, p0, p1, p2, p3);
+				var tangent = calculateBezierTangent(t, p0, p1, p2, p3);
+				points.Add(new BezierPointTangent(point, tangent));
+			}
+		}
+
+		return points;
+	}
+
+	public List<BezierPointTangent> samplePoints( int samplesPerSegment, float cutoff ) {
+		cutoff = Mathf.Clamp(cutoff, 0.0f, 1.0f);
+		int totalPoints = samplesPerSegment * curveCount_;
+		bool exit = false;
+
+		List<BezierPointTangent> points = new List<BezierPointTangent>();
+
+		for( int currCurve = 0; currCurve < curveCount_; ++currCurve ) {
+			for( int currSeg = 0; currSeg <= samplesPerSegment; ++currSeg ) {
+				int currPoint = (currCurve * samplesPerSegment) + currSeg;
+				float percentage = (((float)currPoint * 100.0f) / (float)totalPoints) / 100.0f;
+
+				float t = (0==currSeg) ? 0.0f : (float)currSeg / (float)samplesPerSegment;
+
+				int index = currCurve * 3;
+				var p0 = controlPoints_[index+0];
+				var p1 = controlPoints_[index+1];
+				var p2 = controlPoints_[index+2];
+				var p3 = controlPoints_[index+3];
+
+				var point = calculateBezierPoint(t, p0, p1, p2, p3);
+				var tangent = calculateBezierTangent(t, p0, p1, p2, p3);
+				points.Add(new BezierPointTangent(point, tangent));
+
+				if( percentage >= cutoff ) {
+					exit = true;
+					break;
+				}
+			}
+			if( exit ) {
+				break;
+			}
+		}
+
+		return points;
+	}
+
+	Vector3 calculateBezierTangent( float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3 ) {
+		float nt = 1.0f - t;
+		float x = -3.0f * p0.x * nt * nt  +  3.0f * p1.x * (1.0f - 4.0f * t + 3.0f * t * t)  +  3.0f * p2.x * (2.0f * t - 3.0f * t * t)  +  3.0f * p3.x * t * t;
+		float y = -3.0f * p0.y * nt * nt  +  3.0f * p1.y * (1.0f - 4.0f * t + 3.0f * t * t)  +  3.0f * p2.y * (2.0f * t - 3.0f * t * t)  +  3.0f * p3.y * t * t;
+		float z = -3.0f * p0.z * nt * nt  +  3.0f * p1.z * (1.0f - 4.0f * t + 3.0f * t * t)  +  3.0f * p2.z * (2.0f * t - 3.0f * t * t)  +  3.0f * p3.z * t * t;
+		return new Vector3(x, y, z);
+
+
+	// float a = 1-t;
+	// float b = a*6*t;
+	// a = a*a*3;
+	// float c = t*t*3;
+
+	// return     - a * p0  // derivative formula from GetBezierPoint formula
+	//         + a * p1
+	//         - b * p1
+	//         - c * p2
+	//         + b * p2
+	//         + c * p3;
+
+		// float invT = 1.0f - t;
+		// return (2.0f*invT * (p1-p0) + t*t*(p2-p1));
+	}
+
+	Vector3 calculateBezierPoint( float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3 ) {
+		float u = 1 - t;
+		float tt = t * t;
+		float uu = u * u;
+		float uuu = uu * u;
+		float ttt = tt * t;
+		Vector3 p = uuu * p0;
+		p += 3 * uu * t * p1;
+		p += 3 * u * tt * p2;
+		p += ttt * p3; 
+		return p;
+	}
+}

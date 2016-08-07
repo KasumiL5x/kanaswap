@@ -1,0 +1,33 @@
+/!flash/
+
+KanaSwap/[Ll]ibrary/
+KanaSwap/[Tt]emp/
+KanaSwap/[Oo]bj/
+KanaSwap/[Bb]uild/
+KanaSwap/[Bb]uilds/
+KanaSwap/Assets/AssetStoreTools*
+
+# autogen vs/md/consulo solution and project files
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# unity generated meta files
+*.pidb.meta
+
+# unity generated file on crash reports
+sysinfo.txt
+
+# builds
+*.apk
+*.unitypackage
+

@@ -13,6 +13,11 @@
 	N
 }
 
+public enum KanaMode {
+	Hiragana,
+	Katakana
+}
+
 public static class KanaTypeTo {
 	public static string romaji( KanaType type ) {
 		switch( type ) {

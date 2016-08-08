@@ -39,7 +39,9 @@ public class KanaPopup : MonoBehaviour {
 			return;
 		}
 
-		text.text = KanaTypeTo.romaji(type);
+		text.text = type.toRomaji();
+
+		//string mode = 
 
 		switch( type ) {
 			case KanaType.A: { animation.configure("hiragana", "a"); break; }
@@ -90,7 +92,7 @@ public class KanaPopup : MonoBehaviour {
 			case KanaType.N: { animation.configure("hiragana", "n"); break; }
 
 			default: {
-				Debug.Log("WARNING: Unhandled KanaType in KanaPopup::setKanaType (" + KanaTypeTo.romaji(type) + ").");
+				Debug.Log("WARNING: Unhandled KanaType in KanaPopup::setKanaType (" + type.toRomaji() + ").");
 				break;
 			}
 		}

@@ -1,4 +1,6 @@
-﻿public enum KanaType {
+﻿using System;
+
+public enum KanaType {
 	Invalid,
 	A,I,U,E,O,
 	KA,KI,KU,KE,KO,
@@ -13,157 +15,152 @@
 	N
 }
 
-public enum KanaMode {
-	Hiragana,
-	Katakana
-}
-
-public static class KanaTypeTo {
-	public static string romaji( KanaType type ) {
+public static class KanaTypeMethods {
+	public static string toRomaji( this KanaType type ) {
 		switch( type ) {
-			case KanaType.Invalid: {
+		case KanaType.Invalid: {
 				return "!";
 			}
-			case KanaType.A: {
+		case KanaType.A: {
 				return "a";
 			}
-			case KanaType.I: {
+		case KanaType.I: {
 				return "i";
 			}
-			case KanaType.U: {
+		case KanaType.U: {
 				return "u";
 			}
-			case KanaType.E: {
+		case KanaType.E: {
 				return "e";
 			}
-			case KanaType.O: {
+		case KanaType.O: {
 				return "o";
 			}
-			case KanaType.KA: {
+		case KanaType.KA: {
 				return "ka";
 			}
-			case KanaType.KI: {
+		case KanaType.KI: {
 				return "ki";
 			}
-			case KanaType.KU: {
+		case KanaType.KU: {
 				return "ku";
 			}
-			case KanaType.KE: {
+		case KanaType.KE: {
 				return "ke";
 			}
-			case KanaType.KO: {
+		case KanaType.KO: {
 				return "ko";
 			}
-			case KanaType.SA: {
+		case KanaType.SA: {
 				return "sa";
 			}
-			case KanaType.SHI: {
+		case KanaType.SHI: {
 				return "shi";
 			}
-			case KanaType.SU: {
+		case KanaType.SU: {
 				return "su";
 			}
-			case KanaType.SE: {
+		case KanaType.SE: {
 				return "se";
 			}
-			case KanaType.SO: {
+		case KanaType.SO: {
 				return "so";
 			}
-			case KanaType.TA: {
+		case KanaType.TA: {
 				return "ta";
 			}
-			case KanaType.CHI: {
+		case KanaType.CHI: {
 				return "chi";
 			}
-			case KanaType.TSU: {
+		case KanaType.TSU: {
 				return "tsu";
 			}
-			case KanaType.TE: {
+		case KanaType.TE: {
 				return "te";
 			}
-			case KanaType.TO: {
+		case KanaType.TO: {
 				return "to";
 			}
-			case KanaType.NA: {
+		case KanaType.NA: {
 				return "na";
 			}
-			case KanaType.NI: {
+		case KanaType.NI: {
 				return "ni";
 			}
-			case KanaType.NU: {
+		case KanaType.NU: {
 				return "nu";
 			}
-			case KanaType.NE: {
+		case KanaType.NE: {
 				return "ne";
 			}
-			case KanaType.NO: {
+		case KanaType.NO: {
 				return "no";
 			}
-			case KanaType.HA: {
+		case KanaType.HA: {
 				return "ha";
 			}
-			case KanaType.HI: {
+		case KanaType.HI: {
 				return "hi";
 			}
-			case KanaType.FU: {
+		case KanaType.FU: {
 				return "fu";
 			}
-			case KanaType.HE: {
+		case KanaType.HE: {
 				return "he";
 			}
-			case KanaType.HO: {
+		case KanaType.HO: {
 				return "ho";
 			}
-			case KanaType.MA: {
+		case KanaType.MA: {
 				return "ma";
 			}
-			case KanaType.MI: {
+		case KanaType.MI: {
 				return "mi";
 			}
-			case KanaType.MU: {
+		case KanaType.MU: {
 				return "mu";
 			}
-			case KanaType.ME: {
+		case KanaType.ME: {
 				return "me";
 			}
-			case KanaType.MO: {
+		case KanaType.MO: {
 				return "mo";
 			}
-			case KanaType.YA: {
+		case KanaType.YA: {
 				return "ya";
 			}
-			case KanaType.YU: {
+		case KanaType.YU: {
 				return "yu";
 			}
-			case KanaType.YO: {
+		case KanaType.YO: {
 				return "yo";
 			}
-			case KanaType.RA: {
+		case KanaType.RA: {
 				return "ra";
 			}
-			case KanaType.RI: {
+		case KanaType.RI: {
 				return "ri";
 			}
-			case KanaType.RU: {
+		case KanaType.RU: {
 				return "ru";
 			}
-			case KanaType.RE: {
+		case KanaType.RE: {
 				return "re";
 			}
-			case KanaType.RO: {
+		case KanaType.RO: {
 				return "ro";
 			}
-			case KanaType.WA: {
+		case KanaType.WA: {
 				return "wa";
 			}
-			case KanaType.WO: {
+		case KanaType.WO: {
 				return "wo";
 			}
-			case KanaType.N: {
+		case KanaType.N: {
 				return "n";
 			}
 		}
 
-		return "";
+		throw new ArgumentException("type");
 	}
 }

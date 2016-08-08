@@ -85,6 +85,9 @@ public class KanaPopup : MonoBehaviour {
 			case KanaType.RU: { animation.configure("hiragana", "ru"); break; }
 			case KanaType.RE: { animation.configure("hiragana", "re"); break; }
 			case KanaType.RO: { animation.configure("hiragana", "ro"); break; }
+			case KanaType.WA: { animation.configure("hiragana", "wa"); break; }
+			case KanaType.WO: { animation.configure("hiragana", "wo"); break; }
+			case KanaType.N: { animation.configure("hiragana", "n"); break; }
 
 			default: {
 				Debug.Log("WARNING: Unhandled KanaType in KanaPopup::setKanaType (" + KanaTypeTo.romaji(type) + ").");

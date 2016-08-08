@@ -21,10 +21,14 @@ public class KanaAnimator : MonoBehaviour {
 	public float HoldDelay = 1.0f; /**< Delay after all animations are complete. */
 	float holdTimer_ = 0.0f;       /**< Timer for hold delay. */
 	bool isHolding_ = false;       /**< True if holding after animations complete. */
+	public float PauseDelay = 0.25f; /**< Delay after a single stroke is complete before the next starts. */
+	float pauseTimer_ = 0.0f;       /**< Timer for pause delay. */
+	bool isPausing_ = false;        /**< True if pausing animations. */
 
 	public KanaAnimator() {
 		strokes_ = new List<KanaAnimatorGroup>();
 		holdTimer_ = HoldDelay;
+		pauseTimer_ = PauseDelay;
 	}
 
 	void Start() {
@@ -35,7 +39,13 @@ public class KanaAnimator : MonoBehaviour {
 			return;
 		}
 
-		if( isHolding_ ) {
+		if( isPausing_ ) {
+			pauseTimer_ -= Time.deltaTime;
+			if( pauseTimer_ <= 0.0f ) {
+				isPausing_ = false;
+				pauseTimer_ = PauseDelay;
+			}
+		} else if( isHolding_ ) {
 			holdTimer_ -= Time.deltaTime;
 			// reset holding
 			if( holdTimer_ <= 0.0f ) {
@@ -68,6 +78,7 @@ public class KanaAnimator : MonoBehaviour {
 				} else {
 					// set next animation time
 					animationTimer_ = strokes_[animationIndex_].time;
+					isPausing_ = true; // pause after each stroke
 				}
 			}
 		}
@@ -121,9 +132,8 @@ public class KanaAnimator : MonoBehaviour {
 			grp.obj = child.gameObject;
 			grp.curve = grp.obj.GetComponent<DrawableCurve>();
 			grp.points = grp.obj.GetComponent<KanaBezierPoints>();
-			//grp.time = 1.0f; // todo: compute time based on length of curve (from MyBezier class)
 			grp.time = grp.points.BezierCurve.length() / Settings.KANA_ANIMATION_SCALE;
-			Debug.Log (grp.obj.name + ": " + grp.time);
+			//Debug.Log (grp.obj.name + ": " + grp.time);
 			if( null == grp.curve ) {
 				Debug.Log("Stroke is missing a curve (" + Utils.getFullPath(grp.obj) + ")");
 				continue;

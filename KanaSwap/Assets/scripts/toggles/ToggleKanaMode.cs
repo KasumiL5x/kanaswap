@@ -6,7 +6,9 @@ public class ToggleKanaMode : MonoBehaviour {
 	const string OFF_TEXT = "Hiragana";
 
 	void Awake() {
-		GetComponent<Toggle>().isOn = Settings.KANA_MODE == KanaMode.Katakana;
+		var toggle = GetComponent<Toggle> ();
+		toggle.isOn = Settings.KANA_MODE == KanaMode.Katakana;
+		toggleTooltip(toggle.isOn);
 	}
 
 	public void toggleTooltip( bool val ) {

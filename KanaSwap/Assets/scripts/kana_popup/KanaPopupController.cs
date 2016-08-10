@@ -22,6 +22,6 @@ public class KanaPopupController : MonoBehaviour {
 		}
 
 		kanaPopup_.activate();
-		kanaPopup_.setKanaType(kana_.Type);
+		kanaPopup_.setKanaType(kana_.CurrentType);
 	}
 }

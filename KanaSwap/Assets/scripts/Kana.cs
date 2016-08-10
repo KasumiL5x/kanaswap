@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 public class Kana : MonoBehaviour {
-	public KanaType Type = KanaType.Invalid;
+	public KanaType ActualType = KanaType.Invalid;
+	public KanaType CurrentType = KanaType.Invalid;
 
 	public void forceUpdateText() {
 		var textMesh = GetComponent<TextMesh>();
@@ -10,6 +11,6 @@ public class Kana : MonoBehaviour {
 			return;
 		}
 
-		textMesh.text = Type.toJapanese();
+		textMesh.text = CurrentType.toJapanese();
 	}
 }

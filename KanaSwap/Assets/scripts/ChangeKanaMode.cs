@@ -1,24 +1,15 @@
 ﻿using UnityEngine;
 
 public class ChangeKanaMode : MonoBehaviour {
-	public GameObject HiraganaGrid;
-	public GameObject KatakanaGrid;
+	public KanaHandler KanaHandlerObject;
 
 	public void change( KanaMode mode ) {
-		if( null == HiraganaGrid || null == KatakanaGrid ) {
-			Debug.Log("A grid object was missing.");
+		if( null == KanaHandlerObject) {
+			Debug.Log ("KanaHandler is not set.");
 			return;
 		}
-
 		Settings.KANA_MODE = mode;
-
-		bool enableHiragana = KanaMode.Hiragana == mode;
-		HiraganaGrid.SetActive(enableHiragana);
-		KatakanaGrid.SetActive(!enableHiragana);
-
-
+		KanaHandlerObject.updateAllText ();
 		Debug.Log ("KanaMode is now " + mode);
-
-		// todo: tweak objects accordingly
 	}
 }

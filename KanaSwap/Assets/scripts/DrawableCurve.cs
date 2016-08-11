@@ -42,9 +42,6 @@ public class DrawableCurve : MonoBehaviour {
 			trianglePoints_.Add(TL);
 			trianglePoints_.Add(TR);
 			trianglePoints_.Add(BR);
-
-			// Debug.DrawRay(p0, p0Tan, Color.red, 10.0f);
-			// Debug.DrawRay(p0, p0Perp, Color.green, 10.0f);
 		}
 	}
 }

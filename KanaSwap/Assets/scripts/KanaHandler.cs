@@ -45,12 +45,9 @@ public class KanaHandler : MonoBehaviour {
 				continue;
 			}
 
-			//Debug.Log(Utils.getFullPath(child.gameObject) + " now has ID: " + candidates[i]);
-
 			kana.CurrentType = (KanaType)candidates[i];
 		}
 
-		// update text
 		updateAllText();
 	}
 

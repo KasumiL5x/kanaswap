@@ -30,7 +30,6 @@ public class CurveRenderer : MonoBehaviour {
 
 	void OnPostRender() {
 		material_.SetPass(0);
-		// GL.PushMatrix();
 
 		GL.Begin(GL.TRIANGLES);
 		// GL.wireframe = true;
@@ -46,37 +45,5 @@ public class CurveRenderer : MonoBehaviour {
 			}
 		}
 		GL.End();
-
-		// tris
-		// GL.Begin(GL.TRIANGLES);
-		// GL.wireframe = true;
-		// GL.Color(new Color(0.0f, 0.0f, 0.0f, 1.0f));
-		// for( int i = 0; i < points.Count-3; i += 3 ) {
-		// 	GL.Vertex3(points[i+0].x, points[i+0].y, points[i+0].z);
-		// 	GL.Vertex3(points[i+1].x, points[i+1].y, points[i+1].z);
-		// 	GL.Vertex3(points[i+2].x, points[i+2].y, points[i+2].z);
-		// }
-		// GL.End();
-
-		// quads
-		// GL.Begin(GL.QUADS);
-		// GL.wireframe = true;
-		// GL.Color(new Color(0.0f, 0.0f, 0.0f, 1.0f));
-		// for( int i = 0; i < points.Count-3; i += 3 ) {
-		// 	GL.Vertex3(points[i+0].x, points[i+0].y, points[i+0].z);
-		// 	GL.Vertex3(points[i+1].x, points[i+1].y, points[i+1].z);
-		// 	GL.Vertex3(points[i+2].x, points[i+2].y, points[i+2].z);
-		// 	GL.Vertex3(points[i+3].x, points[i+3].y, points[i+3].z);
-		// }
-		// GL.End();
-
-		// lines
-		// GL.Begin(GL.LINES);
-		// GL.Color(new Color(0.0f, 0.0f, 0.0f, 1.0f));
-		// for( int i = 0; i < points.Count; ++i ) {
-		// 	GL.Vertex3(points[i].x, points[i].y, points[i].z);
-		// }
-		// GL.End();
-		// GL.PopMatrix();
 	}
 }

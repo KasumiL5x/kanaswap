@@ -133,7 +133,7 @@ public class KanaAnimator : MonoBehaviour {
 			grp.curve = grp.obj.GetComponent<DrawableCurve>();
 			grp.points = grp.obj.GetComponent<KanaBezierPoints>();
 			grp.time = grp.points.BezierCurve.length() / Settings.KANA_ANIMATION_SCALE;
-			//Debug.Log (grp.obj.name + ": " + grp.time);
+
 			if( null == grp.curve ) {
 				Debug.Log("Stroke is missing a curve (" + Utils.getFullPath(grp.obj) + ")");
 				continue;

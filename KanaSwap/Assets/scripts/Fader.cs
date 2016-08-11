@@ -33,8 +33,6 @@ public class Fader : MonoBehaviour {
 			fadeTimer_ = 0.0f;
 			alpha = fadingOut_ ? 0.0f : 1.0f;
 		}
-
-		// Debug.Log(transform.name + ": " + alpha);
 		
 		foreach( var obj in ObjectsToFade ) {
 			var renderer = obj.GetComponent<Renderer>();

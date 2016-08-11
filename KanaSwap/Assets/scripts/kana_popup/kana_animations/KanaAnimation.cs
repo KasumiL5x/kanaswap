@@ -12,7 +12,6 @@ public class KanaAnimation : MonoBehaviour {
 	}
 
 	void Start () {
-		// configure("hiragana", "o");
 	}
 
 	public void clear() {

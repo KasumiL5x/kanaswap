@@ -4,6 +4,7 @@ public class KanaPopupController : MonoBehaviour {
 	public GameObject PopupObject = null;
 	KanaPopup kanaPopup_ = null;
 	Kana kana_ = null;
+	bool isMouseOver_ = false;
 
 	void Start () {
 		if( null == PopupObject ) {
@@ -15,7 +16,11 @@ public class KanaPopupController : MonoBehaviour {
 		kana_ = GetComponent<Kana>();
 	}
 
-	void OnMouseDown() {
+	void OnMouseUp() {
+		if( !isMouseOver_ ) {
+			return;
+		}
+
 		if( null == PopupObject || null == kanaPopup_ || null == kana_ ) {
 			Debug.Log("Objects missing.");
 			return;
@@ -23,5 +28,13 @@ public class KanaPopupController : MonoBehaviour {
 
 		kanaPopup_.activate();
 		kanaPopup_.setKanaType(kana_.CurrentType);
+	}
+
+	void OnMouseEnter() {
+		isMouseOver_ = true;
+	}
+
+	void OnMouseExit() {
+		isMouseOver_ = false;
 	}
 }

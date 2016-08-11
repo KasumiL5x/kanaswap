@@ -1,11 +1,79 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class KanaHandler : MonoBehaviour {
+
+	public void reorder() {
+		foreach( Transform xform in transform ) {
+			var kana = xform.gameObject.GetComponent<Kana>();
+			if( null == kana ) {
+				Debug.Log(Utils.getFullPath(xform.gameObject) + " is missing a Kana.");
+				continue;
+			}
+
+			kana.CurrentType = kana.ActualType;
+		}
+
+		updateAllText();
+	}
+	
+	public void shuffle() {
+		int childCount = transform.childCount;
+
+		// populate ordered array from 0..childCount
+		int[] candidates = new int[childCount];
+		for( int i = 0; i < childCount; ++i ) {
+			candidates[i] = i+1; // zero = invalid, so skip it
+		}
+
+		// shuffle the array (fisher-yates)
+		System.Random rand = new System.Random();
+		int len = candidates.Length;
+		while( len > 1 ) {
+			int idx = rand.Next(len--);
+			int tmp = candidates[len];
+			candidates[len] = candidates[idx];
+			candidates[idx] = tmp;
+		}
+
+		// assign kana randomly based on array
+		for( int i = 0; i < transform.childCount; ++i ) {
+			var child = transform.GetChild(i);
+			var kana = child.gameObject.GetComponent<Kana>();
+			if( null == kana ) {
+				Debug.Log(Utils.getFullPath(child.gameObject) + " is missing a Kana.");
+				continue;
+			}
+
+			//Debug.Log(Utils.getFullPath(child.gameObject) + " now has ID: " + candidates[i]);
+
+			kana.CurrentType = (KanaType)candidates[i];
+		}
+
+		// update text
+		updateAllText();
+	}
+
+	public bool isCorrect() {
+		foreach( Transform xform in transform ) {
+			var kana = xform.gameObject.GetComponent<Kana>();
+			if( null == kana ) {
+				Debug.Log(Utils.getFullPath(xform.gameObject) + " is missing a Kana.");
+				return false;
+			}
+
+			if( kana.CurrentType != kana.ActualType ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public void updateAllText() {
 		foreach( Transform xform in transform ) {
 			var kana = xform.gameObject.GetComponent<Kana>();
 			if( null == kana ) {
-				Debug.Log (Utils.getFullPath (xform.gameObject) + " is missing a Kana.");
+				Debug.Log(Utils.getFullPath(xform.gameObject) + " is missing a Kana.");
 				continue;
 			}
 

@@ -29,8 +29,7 @@ public class KanaTooltipController : MonoBehaviour {
 		if( Settings.ShowTooltip ) {
 			fader_.fadeIn();
 
-			// todo: clean this up
-			TooltipObject.transform.GetChild(1).GetComponent<TextMesh>().text = kana_.CurrentType.toRomaji();
+			TooltipObject.transform.Find("text").GetComponent<TextMesh>().text = kana_.CurrentType.toRomaji();
 
 			var pos = transform.position;
 			var offset = new Vector3(0.0f, TooltipObject.transform.lossyScale.y * 2.0f + 0.1f, 0.0f);

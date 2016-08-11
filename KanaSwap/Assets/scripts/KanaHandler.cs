@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class KanaHandler : MonoBehaviour {
 
-	public void reorder() {
+	public void reset() {
 		foreach( Transform xform in transform ) {
 			var kana = xform.gameObject.GetComponent<Kana>();
 			if( null == kana ) {

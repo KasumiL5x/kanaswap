@@ -4,7 +4,7 @@ using System.Collections;
 public class CloseKanaPopup : MonoBehaviour {
 	public KanaPopup popup_ = null;
 
-	void OnMouseDown() {
+	void OnMouseUp() {
 		if( null == popup_ ) {
 			Debug.Log("Missing popup.");
 			return;

@@ -3,6 +3,15 @@ using System.Collections.Generic;
 
 public class KanaHandler : MonoBehaviour {
 
+	public void swap( Kana a, Kana b ) {
+		var tmp = a.CurrentType;
+		a.CurrentType = b.CurrentType;
+		b.CurrentType = tmp;
+
+		a.forceUpdateText();
+		b.forceUpdateText();
+	}
+
 	public void reset() {
 		foreach( Transform xform in transform ) {
 			var kana = xform.gameObject.GetComponent<Kana>();

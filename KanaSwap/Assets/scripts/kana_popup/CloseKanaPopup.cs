@@ -21,9 +21,6 @@ public class CloseKanaPopup : MonoBehaviour {
 			Debug.Log("Missing popup.");
 			return;
 		}
-
 		popup_.deactivate();
-
-		return;
 	}
 }

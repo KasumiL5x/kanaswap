@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class DrawRect : MonoBehaviour {
 	public Color PixelColor;
 	Sprite sprite_ = null;

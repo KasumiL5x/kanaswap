@@ -7,6 +7,14 @@ public class MessagePopup : MonoBehaviour {
 	float timer_ = 0.0f;
 	bool isAlive_ = false;
 
+	bool myCondition( TextMesh textMesh ) {
+		return "hello" == textMesh.text;
+	}
+
+	void process( Transform xform ) {
+		
+	}
+
 	void Awake() {
 		fader_ = gameObject.GetComponent<Fader>();
 		if( null == fader_ ) {

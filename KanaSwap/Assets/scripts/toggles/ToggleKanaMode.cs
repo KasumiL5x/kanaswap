@@ -6,24 +6,16 @@ public class ToggleKanaMode : MonoBehaviour {
 	const string OFF_TEXT = "Hiragana";
 
 	void Awake() {
-		var toggle = GetComponent<Toggle> ();
-		toggle.isOn = Settings.KANA_MODE == KanaMode.Katakana;
+		var toggle = GetComponent<Toggle>();
+		toggle.isOn = KanaMode.Katakana == Settings.KANA_MODE;
 		toggleTooltip(toggle.isOn);
 	}
 
 	public void toggleTooltip( bool val ) {
-		var label = transform.Find ("Label");
-		if( null == label ) {
-			Debug.Log("Missing label.");
-			return;
-		}
-		var text = label.GetComponent<UnityEngine.UI.Text> ();
-		if( null == text ) {
-			Debug.Log("Label is missing Text component.");
-			return;
-		}
+		// update label text
+		transform.Find("Label").With(x => x.GetComponent<UnityEngine.UI.Text>()).text =  val ? ON_TEXT : OFF_TEXT;
 
-		text.text = val ? ON_TEXT : OFF_TEXT;
-		GameObject.Find("Scripts").GetComponent<ChangeKanaMode>().change(val ? KanaMode.Katakana : KanaMode.Hiragana);
+		// change actual kana mode
+		GameObject.Find("Scripts").With(x => x.GetComponent<ChangeKanaMode>()).change(val ? KanaMode.Katakana : KanaMode.Hiragana);
 	}
 }

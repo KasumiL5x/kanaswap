@@ -11,11 +11,7 @@ public class KanaSelector : MonoBehaviour {
 	}
 
 	void onMouseUp( GameObject hit ) {
-		if( null == hit ) {
-			return;
-		}
-
-		var hitKana = getKana(hit);
+		var hitKana = hit.With(x => getKana(x));
 		if( null == hitKana ) {
 			return;
 		}

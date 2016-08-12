@@ -35,7 +35,7 @@ public class Fader : MonoBehaviour {
 		}
 		
 		foreach( var obj in ObjectsToFade ) {
-			var renderer = obj.GetComponent<Renderer>();
+			var renderer = obj.With(x => x.GetComponent<Renderer>());
 			if( null == renderer ) {
 				Debug.Log("Object's Renderer was null.");
 				continue;
@@ -53,7 +53,7 @@ public class Fader : MonoBehaviour {
 		// if first fade, set all alpha to zero
 		if( firstFade_) {
 			foreach( var obj in ObjectsToFade ) {
-				var renderer = obj.GetComponent<Renderer>();
+				var renderer = obj.With(x => x.GetComponent<Renderer>());
 				if( null == renderer ) {
 					Debug.Log("Object's Renderer was null.");
 					continue;
@@ -74,7 +74,7 @@ public class Fader : MonoBehaviour {
 		if( DisableOnInvisible ) {
 			foreach( var obj in ObjectsToFade ) {
 				// Debug.Log("Activating " + obj.name);
-				obj.SetActive(true);
+				obj.Do(x => x.SetActive(true));
 			}
 		}
 
@@ -95,7 +95,7 @@ public class Fader : MonoBehaviour {
 		// if first fade, set all alpha to 1
 		if( firstFade_ ) {
 			foreach( var obj in ObjectsToFade ) {
-				var renderer = obj.GetComponent<Renderer>();
+				var renderer = obj.With(x => x.GetComponent<Renderer>());
 				if( null == renderer ) {
 					Debug.Log("Object's Renderer was null.");
 					continue;

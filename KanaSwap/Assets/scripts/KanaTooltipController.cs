@@ -7,12 +7,7 @@ public class KanaTooltipController : MonoBehaviour {
 	Kana kana_ = null;
 
 	void Start () {
-		if( null == TooltipObject ) {
-			Debug.Log("TooltipObject is null.");
-			return;
-		}
-
-		fader_ = TooltipObject.GetComponent<Fader>();
+		fader_ = TooltipObject.With(x => x.GetComponent<Fader>());
 		kana_ = GetComponent<Kana>();
 	}
 	
@@ -29,7 +24,7 @@ public class KanaTooltipController : MonoBehaviour {
 		if( Settings.ShowTooltip ) {
 			fader_.fadeIn();
 
-			TooltipObject.transform.Find("text").GetComponent<TextMesh>().text = kana_.CurrentType.toRomaji();
+			TooltipObject.transform.Find("text").With(x => x.GetComponent<TextMesh>()).text = kana_.CurrentType.toRomaji();
 
 			var pos = transform.position;
 			var offset = new Vector3(0.0f, TooltipObject.transform.lossyScale.y * 2.0f + 0.1f, 0.0f);

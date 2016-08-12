@@ -3,46 +3,43 @@ using System;
 using System.Collections.Generic;
 
 public class KanaPopup : MonoBehaviour {
-	Fader fader_ = null;
+	Fader fader_;
+	GameObject colliderObj_;
+	KanaAnimation kanaAnimation_;
+	TextMesh textMesh_;
 
 	void Start() {
 		fader_ = GetComponent<Fader>();
+		colliderObj_ = transform.Find("collider").With(x => x.gameObject);
+		kanaAnimation_ = transform.Find("kana").With(x => x.GetComponent<KanaAnimation>());
+		textMesh_ = transform.Find("text").With(x => x.GetComponent<TextMesh>());
 	}
 
 	public void activate() {
-		transform.Find("collider").gameObject.SetActive(true);
+		if( null == fader_ || null == colliderObj_ ) {
+			Debug.Log("Something is missing.");
+		}
+
+		colliderObj_.SetActive(true);
 		fader_.fadeIn();
 	}
 
 	public void deactivate() {
-		transform.Find("collider").gameObject.SetActive(false);
-		fader_.fadeOut();
-
-		var animation = transform.Find("kana").gameObject.GetComponent<KanaAnimation>();
-		if( null == animation ) {
-			Debug.Log("KanaAnimation is null.");
-			return;
+		if( null == fader_ || null == colliderObj_ || null == kanaAnimation_ ) {
+			Debug.Log("Something is missing.");
 		}
-		animation.clear();
+
+		colliderObj_.SetActive(false);
+		fader_.fadeOut();
+		kanaAnimation_.clear();
 	}
 
 	public void setKanaType( KanaType type ) {
-		var text = transform.Find("text").gameObject.GetComponent<TextMesh>();
-		if( null == text ) {
-			Debug.Log("TextMesh is null.");
-			return;
+		if( null == kanaAnimation_ || textMesh_ == null) {
+			Debug.Log("Something is missing.");
 		}
 
-		var animation = transform.Find("kana").gameObject.GetComponent<KanaAnimation>();
-		if( null == animation ) {
-			Debug.Log("KanaAnimation is null.");
-			return;
-		}
-
-		text.text = type.toRomaji();
-
-		string mode = Settings.KANA_MODE.toRomaji();
-		string character = type.toRomaji();
-		animation.configure(mode, character);
+		textMesh_.text = type.toRomaji();
+		kanaAnimation_.configure(Settings.KANA_MODE.toRomaji(), type.toRomaji());
 	}
 }

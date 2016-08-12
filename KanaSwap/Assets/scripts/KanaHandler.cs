@@ -47,10 +47,9 @@ public class KanaHandler : MonoBehaviour {
 
 		// assign kana randomly based on array
 		for( int i = 0; i < transform.childCount; ++i ) {
-			var child = transform.GetChild(i);
-			var kana = child.gameObject.GetComponent<Kana>();
+			var kana = transform.GetChild(i).With(x => x.GetComponent<Kana>());
 			if( null == kana ) {
-				Debug.Log(Utils.getFullPath(child.gameObject) + " is missing a Kana.");
+				Debug.Log(Utils.getFullPath(transform.GetChild(i).gameObject) + " is missing a Kana.");
 				continue;
 			}
 

@@ -7,17 +7,17 @@ public class KanaSelector : MonoBehaviour {
 	public GameObject hiliteObject_;
 
 	void Awake() {
-		MouseHandler.addMouseDownB(onMouseUp);
+		MouseHandler.addMouseDown(onMouseUp);
 	}
 
-	bool onMouseUp( GameObject hit ) {
+	void onMouseUp( GameObject hit ) {
 		if( null == hit ) {
-			return false;
+			return;
 		}
 
 		var hitKana = getKana(hit);
 		if( null == hitKana ) {
-			return false;
+			return;
 		}
 
 		// no selection - set primary
@@ -42,7 +42,7 @@ public class KanaSelector : MonoBehaviour {
 			hiliteObject_.GetComponent<Fader>().fadeOut();
 		}
 
-		return true;
+		return;
 	}
 
 	Kana getKana( GameObject obj ) {

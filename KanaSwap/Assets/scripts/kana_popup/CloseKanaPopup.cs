@@ -5,25 +5,25 @@ public class CloseKanaPopup : MonoBehaviour {
 	public KanaPopup popup_ = null;
 
 	void Awake() {
-		MouseHandler.addMouseDownB(onMouseDown);
+		MouseHandler.addMouseDown(onMouseDown);
 	}
 
-	bool onMouseDown( GameObject hit ) {
+	void onMouseDown( GameObject hit ) {
 		if( null == hit ) {
-			return false;
+			return;
 		}
 
 		if( gameObject != hit ) {
-			return false;
+			return;
 		}
 
 		if( null == popup_ ) {
 			Debug.Log("Missing popup.");
-			return false;
+			return;
 		}
 
 		popup_.deactivate();
 
-		return true;
+		return;
 	}
 }

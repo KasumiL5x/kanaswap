@@ -12,6 +12,9 @@ public class KanaHandler : MonoBehaviour {
 		a.forceUpdateText();
 		b.forceUpdateText();
 
+		a.updateColor();
+		b.updateColor();
+
 		// don't bother trying to validate if a or b are wrong
 		if( a.CurrentType != a.ActualType || b.CurrentType != b.ActualType ) {
 			return;
@@ -65,6 +68,7 @@ public class KanaHandler : MonoBehaviour {
 			}
 
 			kana.CurrentType = (KanaType)candidates[i];
+			kana.updateColor();
 		}
 
 		updateAllText();

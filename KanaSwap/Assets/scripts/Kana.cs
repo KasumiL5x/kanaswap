@@ -30,6 +30,11 @@ public class Kana : MonoBehaviour {
 		updateColor();
 	}
 
+	public void reset() {
+		CurrentType = ActualType;
+		updateColor();
+	}
+
 	public void updateColor() {
 		Color color = hilited_ ? HiliteColor : (isCorrect() ? DefaultColor : IncorrectColor);
 		transform.Find("bg").With(x => x.GetComponent<SpriteRenderer>()).Do(x => x.color = color);

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 
 public class DuplicateUnderSelection : EditorWindow {
 	GameObject objToDupe_ = null;
@@ -12,12 +13,18 @@ public class DuplicateUnderSelection : EditorWindow {
 	}
 
 	void doWork() {
+		bool doneAnything = false;
 		foreach( GameObject obj in Selection.GetFiltered(typeof(GameObject), SelectionMode.ExcludePrefab) ) {
 			var dupe = (GameObject)GameObject.Instantiate(objToDupe_);
 			dupe.name = objToDupe_.name;
 			dupe.transform.SetParent(obj.transform);
 			dupe.transform.localPosition = objToDupe_.transform.localPosition;
 			dupe.transform.localRotation = objToDupe_.transform.localRotation;
+			doneAnything = true;
+		}
+
+		if( doneAnything ) {
+			EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
 		}
 	}
 

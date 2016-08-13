@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 public class KanaHandler : MonoBehaviour {
+	public MessagePopup messagePopup_;
 
 	public void swap( Kana a, Kana b ) {
 		var tmp = a.CurrentType;
@@ -10,6 +11,16 @@ public class KanaHandler : MonoBehaviour {
 
 		a.forceUpdateText();
 		b.forceUpdateText();
+
+		// don't bother trying to validate if a or b are wrong
+		if( a.CurrentType != a.ActualType || b.CurrentType != b.ActualType ) {
+			return;
+		}
+
+		// validate grid and show message
+		if( isCorrect() ) {
+			messagePopup_.Do(x => x.show("Well done!", 3.0f));
+		}
 	}
 
 	public void reset() {

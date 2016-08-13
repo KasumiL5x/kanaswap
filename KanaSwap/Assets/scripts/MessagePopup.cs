@@ -41,7 +41,6 @@ public class MessagePopup : MonoBehaviour {
 	}
 
 	public void show( string text, float time=1.0f ) {
-		gameObject.SetActive(true);
 		textMesh_.text = text;
 		fader_.fadeIn();
 		timer_ = time;

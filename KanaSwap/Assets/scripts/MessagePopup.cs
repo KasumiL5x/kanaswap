@@ -4,16 +4,9 @@ using System.Collections;
 public class MessagePopup : MonoBehaviour {
 	Fader fader_;
 	TextMesh textMesh_;
+	GameObject collider_;
 	float timer_ = 0.0f;
 	bool isAlive_ = false;
-
-	bool myCondition( TextMesh textMesh ) {
-		return "hello" == textMesh.text;
-	}
-
-	void process( Transform xform ) {
-		
-	}
 
 	void Awake() {
 		fader_ = gameObject.GetComponent<Fader>();
@@ -25,6 +18,13 @@ public class MessagePopup : MonoBehaviour {
 		if( null == textMesh_ ) {
 			Debug.Log("Missing TextMesh.");
 		}
+
+		collider_ = transform.Find("collider").With(x => x.gameObject);
+		if( null == collider_ ) {
+			Debug.Log("Missing collider.");
+		}
+
+		MouseHandler.addMouseDown(onMouseDown);
 	}
 
 	void Update() {
@@ -36,13 +36,24 @@ public class MessagePopup : MonoBehaviour {
 		if( timer_ <= 0.0f ) {
 			fader_.fadeOut();
 			isAlive_ = false;
+			collider_.SetActive(false);
 		}
 	}
 
 	public void show( string text, float time=1.0f ) {
 		gameObject.SetActive(true);
+		textMesh_.text = text;
 		fader_.fadeIn();
 		timer_ = time;
 		isAlive_ = true;
+		collider_.SetActive(true);
+	}
+
+	void onMouseDown( GameObject hit ) {
+		if( collider_ != hit ) {
+			return;
+		}
+		timer_ = 0.0f;
+		Debug.Log ("Hit: " + Utils.getFullPath (hit));
 	}
 }

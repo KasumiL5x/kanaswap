@@ -20,16 +20,14 @@ public class KanaTooltipController : MonoBehaviour {
 			Debug.Log("Objects missing.");
 			return;
 		}
+			
+		fader_.fadeIn();
 
-		if( Settings.ShowTooltip ) {
-			fader_.fadeIn();
+		TooltipObject.transform.Find("text").With(x => x.GetComponent<TextMesh>()).text = kana_.CurrentType.toRomaji();
 
-			TooltipObject.transform.Find("text").With(x => x.GetComponent<TextMesh>()).text = kana_.CurrentType.toRomaji();
-
-			var pos = transform.position;
-			var offset = new Vector3(0.0f, TooltipObject.transform.lossyScale.y * 2.0f + 0.1f, 0.0f);
-			TooltipObject.transform.position = new Vector3(pos.x, pos.y, TooltipObject.transform.position.z) + offset;
-		}
+		var pos = transform.position;
+		var offset = new Vector3(0.0f, TooltipObject.transform.lossyScale.y * 2.0f + 0.1f, 0.0f);
+		TooltipObject.transform.position = new Vector3(pos.x, pos.y, TooltipObject.transform.position.z) + offset;
 	}
 
 	void OnMouseExit() {
@@ -37,9 +35,7 @@ public class KanaTooltipController : MonoBehaviour {
 			Debug.Log("Objects missing.");
 			return;
 		}
-
-		if( Settings.ShowTooltip ) {
-			fader_.fadeOut();
-		}
+			
+		fader_.fadeOut();
 	}
 }

@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 
 public class Kana : MonoBehaviour {
-	public KanaType ActualType = KanaType.Invalid;
-	public KanaType CurrentType = KanaType.Invalid;
+	[SerializeField]
+	KanaType actualType_ = KanaType.Invalid;
+	public KanaType ActualType { get{return actualType_;} }
+
+	[SerializeField]
+	KanaType currentType_ = KanaType.Invalid;
+	public KanaType CurrentType { get{return currentType_;} set{updateCurrentType(value);} }
 
 	Color DefaultColor   = new Color(0.8f, 0.75f, 0.71f, 1.0f); // #cdc0b4
 	Color IncorrectColor = new Color(0.6f, 0.56f, 0.50f, 1.0f); // #998e7f
@@ -15,6 +20,9 @@ public class Kana : MonoBehaviour {
 	Color lastColor_;
 	Color desiredColor_;
 	SpriteRenderer bgRenderer_;
+
+	// tooltip stuff
+	public KanaTooltip Tooltip;
 
 	public Kana() {
 		timerColorLerp_ = ColorLerpTime;
@@ -43,8 +51,22 @@ public class Kana : MonoBehaviour {
 		}
 	}
 
+	void OnMouseEnter() {
+		Tooltip.Do(x => x.activate(currentType_.toRomaji(), transform.position, gameObject));
+	}
+
+	void OnMouseExit() {
+		Tooltip.Do(x => x.deactivate ());
+	}
+
+	void updateCurrentType( KanaType newType ) {
+		currentType_ = newType;
+
+		Tooltip.If(x => x.ActiveKana == gameObject).Do(x => x.updateText(currentType_.toRomaji()));
+	}
+
 	public bool isCorrect() {
-		return CurrentType == ActualType;
+		return currentType_ == actualType_;
 	}
 
 	public void forceUpdateText() {
@@ -53,7 +75,7 @@ public class Kana : MonoBehaviour {
 			Debug.Log("TextMesh is missing from " + Utils.getFullPath (gameObject));
 			return;
 		}
-		textMesh.text = CurrentType.toJapanese();
+		textMesh.text = currentType_.toJapanese();
 	}
 
 	public void setHilite( bool hilited ) {
@@ -62,7 +84,7 @@ public class Kana : MonoBehaviour {
 	}
 
 	public void reset() {
-		CurrentType = ActualType;
+		currentType_ = actualType_;
 		updateColor();
 	}
 

@@ -51,14 +51,6 @@ public class Kana : MonoBehaviour {
 		}
 	}
 
-	void OnMouseEnter() {
-		Tooltip.Do(x => x.activate(currentType_.toRomaji(), transform.position, gameObject));
-	}
-
-	void OnMouseExit() {
-		Tooltip.Do(x => x.deactivate ());
-	}
-
 	void updateCurrentType( KanaType newType ) {
 		currentType_ = newType;
 

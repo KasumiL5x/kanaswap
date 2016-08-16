@@ -40,8 +40,9 @@ public class MouseHandler : MonoBehaviour {
 				cb.Invoke(obj);
 			}
 		} else if( isMouseDown && wasMouseDown_ ) {
+			var obj = getObjectUnderCursor();
 			foreach( var cb in MouseHold ) {
-				cb.Invoke(null);
+				cb.Invoke(obj);
 			}
 		} else if( !isMouseDown && wasMouseDown_ ) {
 			var obj = getObjectUnderCursor();

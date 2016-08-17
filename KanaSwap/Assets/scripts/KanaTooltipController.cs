@@ -2,32 +2,51 @@
 
 public class KanaTooltipController : MonoBehaviour {
 	public KanaTooltip Tooltip;
+	public float TimeToActivate = 0.1f;
+	float activateTimer_ = 0.0f;
+	bool isMouseDown_ = false;
+	bool isTooltipActive_ = false;
+	GameObject hitObject_;
 
 	void Start() {
-		MouseHandler.addMouseDown(onMouseDown);
+		activateTimer_ = TimeToActivate;
+
 		MouseHandler.addMouseHold(onMouseHold);
 		MouseHandler.addMouseUp(onMouseUp);
 	}
 
-	void onMouseDown( GameObject hit ) {
-		var kana = hit.With(x => x.GetComponent<Kana>());
-		if( null == kana ) {
-			return;
-		}
+	void Update() {
+		if( isMouseDown_ && !isTooltipActive_ ) {
+			activateTimer_ -= Time.deltaTime;
+			if( activateTimer_ < 0.0f ) {
+				activateTimer_ = TimeToActivate;
+				isTooltipActive_ = true;
 
-		Tooltip.Do(x => x.activate(kana.CurrentType.toRomaji(), kana.transform.position, kana.gameObject));
+				setupWith(hitObject_);
+			}
+		} else if( isMouseDown_ && isTooltipActive_ && hitObject_ != Tooltip.ActiveKana ) {
+			setupWith(hitObject_);
+		}
+	}
+
+	void setupWith( GameObject obj ) {
+		var kana = obj.With(x => x.GetComponent<Kana>());
+		if( null != kana ) {
+			Tooltip.Do(x => x.activate(kana.CurrentType.toRomaji(), kana.transform.position, kana.gameObject));
+		} else {
+			Tooltip.Do(x => x.deactivate());
+		}
 	}
 
 	void onMouseHold( GameObject hit ) {
-		var kana = hit.With(x => x.GetComponent<Kana>());
-		if( null == kana ) {
-			Tooltip.Do(x => x.deactivate());
-		} else if( hit != Tooltip.ActiveKana ) {
-			Tooltip.Do(x => x.activate(kana.CurrentType.toRomaji(), kana.transform.position, kana.gameObject));
-		}
+		isMouseDown_ = true;
+		hitObject_ = hit;
 	}
 
 	void onMouseUp( GameObject hit ) {
+		isMouseDown_ = false;
+		isTooltipActive_ = false;
+		activateTimer_ = TimeToActivate;
 		Tooltip.Do(x => x.deactivate());
 	}
 }

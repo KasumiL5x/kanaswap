@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 
 public class Fader : MonoBehaviour {
-	public float FadeTime = 1.0f; /**< Time it takes to fade in/out. */
+	public float FadeInTime = 1.0f; /**< Time it takes to fade in. */
+	public float FadeOutTime = 1.0f; /**< Time it takes to fade out. */
 	float fadeTimer_ = 0.0f; /**< Actual fade timer (counts down). */
 	bool isFading_ = false; /**< Is the fade in progress? */
 	bool fadingOut_ = false; /**< True if fading out, false otherwise. */
@@ -11,7 +12,7 @@ public class Fader : MonoBehaviour {
 	bool firstFade_ = true; /**< Used to force first fade rules. */
 
 	void Start () {
-		fadeTimer_ = FadeTime;
+		fadeTimer_ = FadeInTime;
 	}
 	
 	void Update () {
@@ -21,6 +22,7 @@ public class Fader : MonoBehaviour {
 
 		fadeTimer_ -= Time.deltaTime;
 
+		float FadeTime = fadingOut_ ? FadeOutTime : FadeInTime;
 		float alpha = (FadeTime - fadeTimer_) / FadeTime;
 		if( fadingOut_ ) {
 			alpha = 1.0f - alpha;
@@ -82,13 +84,15 @@ public class Fader : MonoBehaviour {
 		if( isFading_ && fadingOut_ ) {
 			isFading_ = true;
 			fadingOut_ = false;
-			fadeTimer_ = FadeTime - fadeTimer_;
+			//fadeTimer_ = FadeInTime - fadeTimer_;
+			float percent = fadeTimer_ / FadeOutTime;
+			fadeTimer_ = FadeInTime * (1.0f - percent);
 			return;
 		}
 
 		isFading_ = true;
 		fadingOut_ = false;
-		fadeTimer_ = FadeTime;
+		fadeTimer_ = FadeInTime;
 	}
 
 	public void fadeOut() {
@@ -116,12 +120,14 @@ public class Fader : MonoBehaviour {
 		if( isFading_ && !fadingOut_ ) {
 			isFading_ = true;
 			fadingOut_ = true;
-			fadeTimer_ = FadeTime - fadeTimer_;
+			//fadeTimer_ = FadeOutTime - fadeTimer_;
+			float percent = fadeTimer_ / FadeInTime;
+			fadeTimer_ = FadeOutTime * (1.0f - percent);
 			return;
 		}
 
 		isFading_ = true;
 		fadingOut_ = true;
-		fadeTimer_ = FadeTime;
+		fadeTimer_ = FadeOutTime;
 	}
 }

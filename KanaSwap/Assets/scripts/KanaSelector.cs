@@ -52,4 +52,11 @@ public class KanaSelector : MonoBehaviour {
 	Kana getKana( GameObject obj ) {
 		return obj.GetComponent<Kana>();
 	}
+
+	public void clearSelection() {
+		kanaSelection_.PrimarySelection.Do(x => x.setHilite(false));
+		kanaSelection_.SecondarySelection.Do(x => x.setHilite(false));
+		kanaSelection_.PrimarySelection = kanaSelection_.SecondarySelection = null;
+		hiliteObject_.GetComponent<Fader>().fadeOut();
+	}
 }

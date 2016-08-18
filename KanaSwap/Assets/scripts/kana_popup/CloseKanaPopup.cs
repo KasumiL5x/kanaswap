@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CloseKanaPopup : MonoBehaviour {
 	public KanaPopup popup_ = null;
+	public KanaSelector kanaSelector_;
 
 	void Awake() {
 		MouseHandler.addMouseDown(onMouseDown);
@@ -17,10 +18,11 @@ public class CloseKanaPopup : MonoBehaviour {
 			return;
 		}
 
-		if( null == popup_ ) {
-			Debug.Log("Missing popup.");
+		if( null == popup_ || null == kanaSelector_ ) {
+			Debug.Log("Missing something.");
 			return;
 		}
 		popup_.deactivate();
+		kanaSelector_.clearSelection();
 	}
 }
